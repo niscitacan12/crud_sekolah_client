@@ -8,6 +8,13 @@ import TabelGuru from './page/TabelGuru';
 import TabelKelas from './page/TabelKelas';
 import TabelMapel from './page/TabelMapel';
 import TambahGuru from './page/TambahGuru';
+import TambahSiswa from './page/TambahSiswa';
+import TambahKelas from './page/TambahKelas';
+import TambahMapel from './page/TambahMapel';
+import UpdateGuru from './page/UpdateGuru';
+import UpdateSiswa from './page/UpdateSiswa';
+import UpdateKelas from './page/UpdateKelas';
+import UpdateMapel from './page/UpdateMapel';
 
 function App() {
   return (
@@ -22,6 +29,13 @@ function App() {
           <Route path="/tabelKelas" element={<TabelKelas />}></Route>
           <Route path="/tabelMapel" element={<TabelMapel />}></Route>
           <Route path="/tambahGuru" element={<TambahGuru />}></Route>
+          <Route path="/tambahSiswa" element={<TambahSiswa />}></Route>
+          <Route path="/tambahKelas" element={<TambahKelas />}></Route>
+          <Route path="/tambahMapel" element={<TambahMapel />}></Route>
+          <Route path="/ubahGuru" element={<UpdateGuru />}></Route>
+          <Route path="/ubahSiswa" element={<UpdateSiswa />}></Route>
+          <Route path="/ubahKelas" element={<UpdateKelas />}></Route>
+          <Route path="/ubahMapel" element={<UpdateMapel />}></Route>
         </Routes>
       </Router>
     </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../component/Sidebar";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { FaArrowLeft, FaSave } from "react-icons/fa"; 
 
 function TambahGuru() {
     const [namaGuru, setNamaGuru] = useState("");
@@ -45,7 +46,7 @@ function TambahGuru() {
             timer: 1500,
           });
           setTimeout(() => {
-            window.location.href = "/tabelguru";
+            window.location.href = "/tabelGuru";
           }, 1500);
         } catch (error) {
           console.error("Error adding guru:", error);
@@ -96,76 +97,68 @@ function TambahGuru() {
                         Tambah Guru
                     </p>
                     <form onSubmit={addGuru}>
-                        <div className="relative mt-3">
-                            <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
-                            Nama Guru
-                        </label>
-                        <input
-                            type="text"
-                            id="name"
-                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            placeholder=""
-                            value={namaGuru}
-                            onChange={(e) => setNamaGuru(e.target.value)}
-                            required
-                        />
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-2">
-                            <div className="relative">
-                                <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
-                                Jabatan
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900">
+                                    Nama Guru
                                 </label>
                                 <input
-                                type="text"
-                                id="jabatan"
-                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                placeholder=""
-                                value={jabatan}
-                                onChange={(e) => setJabatan(e.target.value)}
-                                required
+                                    type="text"
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    value={namaGuru}
+                                    onChange={(e) => setNamaGuru(e.target.value)}
+                                    required
                                 />
                             </div>
-                            <div className="relative">
-                                <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900 ">
-                                Email
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900">
+                                    Email
                                 </label>
                                 <input
-                                type="date"
-                                id="email"
-                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                placeholder="Tanggal Lahir"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
+                                    type="email"
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                             </div>
-                        </div>
-                        <div className="relative mt-3">
-                            <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900">
-                            Mapel
-                            </label>
-                            <select
-                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm sm:text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            id="mapel"
-                            name="mapel"
-                            value={selectedMapel ? selectedMapel.id : ""}
-                            onChange={(e) =>
-                                setSelectedMapel({
-                                id: e.target.value,
-                                namaMapel: e.target.options[e.target.selectedIndex].text,
-                                })
-                            }
-                            required
-                            >
-                            <option value="" disabled>
-                                Pilih Mapel
-                            </option>
-                            {mapel.map((mapelItem) => (
-                                <option key={mapelItem.id} value={mapelItem.id}>
-                                {mapelItem.namaMapel}
-                                </option>
-                            ))}
-                            </select>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900">
+                                    Jabatan
+                                </label>
+                                <input
+                                    type="text"
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    value={jabatan}
+                                    onChange={(e) => setJabatan(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900">
+                                    Mapel
+                                </label>
+                                <select
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    value={selectedMapel ? selectedMapel.id : ""}
+                                    onChange={(e) =>
+                                        setSelectedMapel({
+                                        id: e.target.value,
+                                        namaMapel: e.target.options[e.target.selectedIndex].text,
+                                        })
+                                    }
+                                    required
+                                >
+                                    <option value="" disabled>
+                                        Pilih Mapel
+                                    </option>
+                                    {mapel.map((mapelItem) => (
+                                        <option key={mapelItem.id} value={mapelItem.id}>
+                                        {mapelItem.namaMapel}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                         <div className="grid grid-cols-2 gap-4 text-center mt-2">
                             <label className="block mb-2 text-sm sm:text-xs font-medium text-gray-900  text-left col-span-2">
@@ -238,15 +231,15 @@ function TambahGuru() {
                             <button
                                 type="button"
                                 onClick={batal}
-                                className="block w-20 sm:w-24 rounded-lg text-black outline outline-red-500 py-3 text-sm sm:text-xs font-medium"
+                                className="inline-flex items-center justify-center w-10 h-10 rounded-lg text-black outline outline-red-500 text-sm sm:text-xs font-medium bg-white shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             >
-                                Batal
+                                <FaArrowLeft className="w-4 h-4" />
                             </button>
                             <button
                                 type="submit"
-                                className="block w-20 sm:w-24 rounded-lg text-black outline outline-[#0b409c] py-3 text-sm sm:text-xs font-medium"
+                                className="inline-flex items-center justify-center w-10 h-10 rounded-lg text-black outline outline-[#0b409c] text-sm sm:text-xs font-medium bg-white shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                             >
-                                Simpan
+                                <FaSave className="w-4 h-4" />
                             </button>
                         </div>
                     </form>
@@ -255,6 +248,6 @@ function TambahGuru() {
         </div> 
     </div>
   )
-}
+} 
 
 export default TambahGuru

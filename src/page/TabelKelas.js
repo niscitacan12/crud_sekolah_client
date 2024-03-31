@@ -50,6 +50,9 @@ function TabelKelas() {
                                     Tingkat Kelas
                                 </th>
                                 <th scope="col" className="px-6 py-3">
+                                    Keterangan
+                                </th>
+                                <th scope="col" className="px-6 py-3">
                                     Aksi
                                 </th>
                             </tr>
@@ -68,6 +71,9 @@ function TabelKelas() {
                                     </td>
                                     <td className="px-6 py-4">
                                         {dataKelas.tingkat_kelas}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {dataKelas.keterangan}
                                     </td>
                                 </tr>
                             ))}

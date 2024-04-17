@@ -5,24 +5,22 @@ import Swal from "sweetalert2";
 import { FaArrowLeft, FaSave } from "react-icons/fa"; 
 
 function TambahSiswa() {
-    const [namaSiswa, setNamaSiswa] = useState("");
-    const [jurusan, setJurusan] = useState("");
-    const [selectedKelas, setSelectedKelas] = useState("");
+    const [nama_siswa, setNama_siswa] = useState("");
     const [nisn, setNisn] = useState("");
     const [alamat, setAlamat] = useState("");
-    const [tanggalLahir, setTanggalLahir] = useState("");
+    const [tanggal_lahir, setTanggal_lahir] = useState("");
+    const [selectedKelas, setSelectedKelas] = useState("");
     const [kelas, setKelas] = useState([]);
 
     const addSiswa = async (e) => {
         e.preventDefault();
     
         const newSiswa = {
-          namaSiswa,
-          jurusan,
-          kelasMode: selectedKelas,
+          nama_siswa,
+          kelasModel: selectedKelas,
           nisn,
           alamat,
-          tanggalLahir,
+          tanggal_lahir,
         };
     
         // Mendapatkan token dari local storage
@@ -31,7 +29,7 @@ function TambahSiswa() {
         try {
           // Menambahkan header Authorization dengan token ke dalam permintaan
           const response = await axios.post(
-            "http://localhost:7000/api/data_siswa",
+            `http://localhost:7000/api/data_siswa/add`,
             newSiswa,
             {
               headers: {
@@ -67,7 +65,7 @@ function TambahSiswa() {
         const token = localStorage.getItem("token");
     
         try {
-            const response = await axios.get("http://localhost:7000/api/data_kelas", {
+            const response = await axios.get(`http://localhost:7000/api/data_kelas/all`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -77,7 +75,7 @@ function TambahSiswa() {
         } catch (error) {
             console.error("Error fetching data:", error);
         }
-        };
+    };
         
         const batal = () => {
         window.location.href = "/tabelSiswa";
@@ -88,12 +86,12 @@ function TambahSiswa() {
         }, []);
     
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-300 dark:bg-gray-300">
         <div className="w-1/5">
             <Sidebar />
         </div>
         <div className="flex-1 max-h-screen overflow-y-auto container p-8">
-            <div class="content-page max-h-screen container p-8 min-h-screen">
+            <div className="content-page max-h-screen container p-8 min-h-screen">
                 <div className="add-siswa mt-12 bg-white p-5 rounded-xl shadow-lg">
                     <p className="text-lg sm:text-xl font-medium mb-4 sm:mb-7">
                         Tambah Siswa
@@ -105,22 +103,11 @@ function TambahSiswa() {
                                     Nama Siswa
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={namaSiswa}
-                                    onChange={(e) => setNamaSiswa(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block mb-2 text-sm font-medium text-gray-900">
-                                    Jurusan
-                                </label>
-                                <input
-                                    type="text"
-                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={jurusan}
-                                    onChange={(e) => setJurusan(e.target.value)}
+                                    value={nama_siswa}
+                                    onChange={(e) => setNama_siswa(e.target.value)}
                                     required
                                 />
                             </div>
@@ -129,6 +116,7 @@ function TambahSiswa() {
                                     NISN
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     value={nisn}
@@ -141,6 +129,7 @@ function TambahSiswa() {
                                     Alamat
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     value={alamat}
@@ -153,17 +142,45 @@ function TambahSiswa() {
                                     Tanggal Lahir
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="date"
                                     id="tanggalLahir"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={tanggalLahir}
-                                    onChange={(e) => setTanggalLahir(e.target.value)}
+                                    value={tanggal_lahir}
+                                    onChange={(e) => setTanggal_lahir(e.target.value)}
                                     required
                                 />
                             </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900">
+                                    Kelas
+                                </label>
+                                <select
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    id="kelas"
+                                    name="kelas"
+                                    value={selectedKelas ? selectedKelas.id : ""}
+                                    onChange={(e) =>
+                                        setSelectedKelas({
+                                        id: e.target.value,
+                                        nama_kelas: e.target.options[e.target.selectedIndex].text,
+                                        })
+                                    }
+                                    required
+                                >
+                                    <option value="" disabled>
+                                        Pilih Kelas
+                                    </option>
+                                    {kelas.map((kelasItem) => (
+                                        <option key={kelasItem.id} value={kelasItem.id}>
+                                            {kelasItem.nama_kelas}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                         <div className="flex justify-between mt-6">
-                            <button
+                            <button    
                                 type="button"
                                 onClick={batal}
                                 className="inline-flex items-center justify-center w-10 h-10 rounded-lg text-black outline outline-red-500 text-sm sm:text-xs font-medium bg-white shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

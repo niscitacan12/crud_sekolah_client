@@ -4,53 +4,26 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 function Login() {
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState(); 
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState(""); 
     const [role, setRole] = useState("admin");
     const [errorMessage, setErrorMessage] = useState("");
-    const [isChecked, setChecked] = useState(false);
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        if (username.trim() === "" || password.trim() === "") {
-          setErrorMessage("Username dan password harus diisi.");
-          return;
-        }
-    
-        if (
-          password.length < 8 ||
-          !/[A-Z]/.test(password) ||
-          !/[a-z]/.test(password)
-        ) {
-          Swal.fire({
-            icon: "error",
-            title:
-              "Password harus memiliki minimal 8 karakter, satu huruf besar, dan satu huruf kecil.",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          return;
+
+        const data = {
+          username: username,
+          password: password,
+          role: role,
         }
     
         try {
-          const response = await axios.post(`http://localhost:7000/login`, {
-            username,
-            password,
-            role,
-          });
+          const response = await axios.post(`http://localhost:7000/login`, data);
     
-          if (response.data === "Username already taken") {
-            Swal.fire({
-              icon: "error",
-              title: "Username sudah terdaftar. Pilih username lain.",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          } else {
-            setShow(false);
+          if (response.status === 200) {
             Swal.fire({
               icon: "success",
               title: "Berhasil Login",
@@ -61,6 +34,10 @@ function Login() {
             setTimeout(() => {
               window.location.href = "/dashboard";
             }, 1500);
+
+            localStorage.setItem("id", response.data.userData.id);
+            localStorage.setItem("role", response.data.userData.role);
+            localStorage.setItem("token", response.data.token); 
           }
         } catch (error) {
           console.error("Error during registration:", error);
@@ -79,13 +56,18 @@ function Login() {
     };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://static.vecteezy.com/system/resources/thumbnails/007/033/146/small/profile-icon-login-head-icon-vector.jpg" alt="Logo" />
-          Login    
+    <section className="bg-gray-300 dark:bg-gray-300 min-h-screen flex justify-center items-center">
+      <div className="flex flex-col items-center justify-center">
+        <a className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <img 
+            className="w-8 h-8 mr-2 rounded-full overflow-hidden" 
+            src="https://static.vecteezy.com/system/resources/thumbnails/007/033/146/small/profile-icon-login-head-icon-vector.jpg" 
+            alt="Logo" 
+            style={{ objectFit: 'cover' }} 
+          />
+          Login  
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="bg-white rounded-lg shadow-md md:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
@@ -100,7 +82,7 @@ function Login() {
                   <input type="text" 
                     name="username" 
                     id="username" 
-                    className="pl-10 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="" 
                     autoComplete="off" 
                     value={username}
@@ -118,7 +100,7 @@ function Login() {
                   <input type={showPassword ? 'text' : 'password'} 
                     name="password" 
                     id="password"
-                    className="pl-10 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                     placeholder=""  
                     autoComplete="off" 
                     value={password}

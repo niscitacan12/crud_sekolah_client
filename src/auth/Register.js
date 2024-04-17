@@ -4,11 +4,10 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 function Register() {
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState(); 
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState(""); 
     const [role, setRole] = useState("admin");
     const [errorMessage, setErrorMessage] = useState("");
-    const [isChecked, setChecked] = useState(false);
     const [show, setShow] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -79,13 +78,18 @@ function Register() {
     };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://static.vecteezy.com/system/resources/thumbnails/007/033/146/small/profile-icon-login-head-icon-vector.jpg" alt="Logo" />
-          Register    
+    <section className="bg-gray-300 dark:bg-gray-300 min-h-screen flex justify-center items-center">
+      <div className="flex flex-col items-center justify-center">
+        <a className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <img 
+            className="w-8 h-8 mr-2 rounded-full overflow-hidden" 
+            src="https://static.vecteezy.com/system/resources/thumbnails/007/033/146/small/profile-icon-login-head-icon-vector.jpg" 
+            alt="Logo" 
+            style={{ objectFit: 'cover' }} 
+          />
+          Register  
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="bg-white rounded-lg shadow-md md:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign up to your account
@@ -100,7 +104,7 @@ function Register() {
                   <input type="text" 
                     name="username" 
                     id="username" 
-                    className="pl-10 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="" 
                     autoComplete="off" 
                     value={username}
@@ -118,7 +122,7 @@ function Register() {
                   <input type={showPassword ? 'text' : 'password'} 
                     name="password" 
                     id="password"
-                    className="pl-10 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                     placeholder=""  
                     autoComplete="off" 
                     value={password}

@@ -5,19 +5,18 @@ import Swal from "sweetalert2";
 import { FaArrowLeft, FaSave } from "react-icons/fa"; 
 
 function TambahKelas() {
-    const [namaKelas, setNamaKelas] = useState("");
-    const [namaJurusan, setNamaJurusan] = useState("");
-    const [email, setEmail] = useState("");
-    const [tingkatKelas, setTingkatKelas] = useState("");
+    const [nama_kelas, setNama_kelas] = useState("");
+    const [nama_jurusan, setNama_jurusan] = useState("");
+    const [tingkat_kelas, setTingkat_kelas] = useState("");
     const [keterangan, setKeterangan] = useState("");
 
     const addKelas = async (e) => {
         e.preventDefault();
     
         const newKelas = {
-          namaKelas,
-          namaJurusan,
-          tingkatKelas,
+          nama_kelas,
+          nama_jurusan,
+          tingkat_kelas,
           keterangan,
         };
     
@@ -27,7 +26,7 @@ function TambahKelas() {
         try {
           // Menambahkan header Authorization dengan token ke dalam permintaan
           const response = await axios.post(
-            "http://localhost:7000/api/data_kelas",
+            `http://localhost:7000/api/data_kelas/add`,
             newKelas,
             {
               headers: {
@@ -61,19 +60,15 @@ function TambahKelas() {
 
     const batal = () => {
         window.location.href = "/tabelKelas";
-        };
-
-    // useEffect(() => {
-    //     getAddKelas();
-    // }, []);
+    };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-300 dark:bg-gray-300">
         <div className="w-1/5">
             <Sidebar />
         </div>
         <div className="flex-1 max-h-screen overflow-y-auto container p-8">
-            <div class="content-page max-h-screen container p-8 min-h-screen">
+            <div className="content-page max-h-screen container p-8 min-h-screen">
                 <div className="add-kelas mt-12 bg-white p-5 rounded-xl shadow-lg">
                     <p className="text-lg sm:text-xl font-medium mb-4 sm:mb-7">
                         Tambah Kelas
@@ -87,8 +82,9 @@ function TambahKelas() {
                                 <input
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={namaKelas}
-                                    onChange={(e) => setNamaKelas(e.target.value)}
+                                    value={nama_kelas}
+                                    onChange={(e) => setNama_kelas(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -97,10 +93,11 @@ function TambahKelas() {
                                     Nama Jurusan
                                 </label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={namaJurusan}
-                                    onChange={(e) => setNamaJurusan(e.target.value)}
+                                    value={nama_jurusan}
+                                    onChange={(e) => setNama_jurusan(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -111,8 +108,9 @@ function TambahKelas() {
                                 <input
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={tingkatKelas}
-                                    onChange={(e) => setTingkatKelas(e.target.value)}
+                                    value={tingkat_kelas}
+                                    onChange={(e) => setTingkat_kelas(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -125,6 +123,7 @@ function TambahKelas() {
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     value={keterangan}
                                     onChange={(e) => setKeterangan(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>

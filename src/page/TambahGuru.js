@@ -5,22 +5,22 @@ import Swal from "sweetalert2";
 import { FaArrowLeft, FaSave } from "react-icons/fa"; 
 
 function TambahGuru() {
-    const [namaGuru, setNamaGuru] = useState("");
+    const [nama_guru, setNama_guru] = useState("");
     const [jabatan, setJabatan] = useState("");
     const [email, setEmail] = useState("");
     const [selectedMapel, setSelectedMapel] = useState("");
-    const [jenisKelamin, setJenisKelamin] = useState("");
+    const [jenis_kelamin, setJenis_kelamin] = useState("");
     const [mapel, setMapel] = useState([]);
 
     const addGuru = async (e) => {
         e.preventDefault();
     
         const newGuru = {
-          namaGuru,
+          nama_guru,
           jabatan,
           email,
           mapelModel: selectedMapel,
-          jenisKelamin,
+          jenis_kelamin,
         };
     
         // Mendapatkan token dari local storage
@@ -29,7 +29,7 @@ function TambahGuru() {
         try {
           // Menambahkan header Authorization dengan token ke dalam permintaan
           const response = await axios.post(
-            "http://localhost:7000/api/data_guru",
+            `http://localhost:7000/api/data_guru/add`,
             newGuru,
             {
               headers: {
@@ -65,7 +65,7 @@ function TambahGuru() {
     const token = localStorage.getItem("token");
 
     try {
-        const response = await axios.get("http://localhost:7000/api/data_mapel", {
+        const response = await axios.get(`http://localhost:7000/api/data_mapel/all`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -86,12 +86,12 @@ function TambahGuru() {
     }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-300 dark:bg-gray-300">
         <div className="w-1/5">
             <Sidebar />
         </div>
         <div className="flex-1 max-h-screen overflow-y-auto container p-8">
-            <div class="content-page max-h-screen container p-8 min-h-screen">
+            <div className="content-page max-h-screen container p-8 min-h-screen">
                 <div className="add-guru mt-12 bg-white p-5 rounded-xl shadow-lg">
                     <p className="text-lg sm:text-xl font-medium mb-4 sm:mb-7">
                         Tambah Guru
@@ -105,8 +105,9 @@ function TambahGuru() {
                                 <input
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={namaGuru}
-                                    onChange={(e) => setNamaGuru(e.target.value)}
+                                    value={nama_guru}
+                                    onChange={(e) => setNama_guru(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -119,6 +120,7 @@ function TambahGuru() {
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -131,6 +133,7 @@ function TambahGuru() {
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     value={jabatan}
                                     onChange={(e) => setJabatan(e.target.value)}
+                                    autoComplete="off"
                                     required
                                 />
                             </div>
@@ -144,7 +147,7 @@ function TambahGuru() {
                                     onChange={(e) =>
                                         setSelectedMapel({
                                         id: e.target.value,
-                                        namaMapel: e.target.options[e.target.selectedIndex].text,
+                                        nama_mapel: e.target.options[e.target.selectedIndex].text,
                                         })
                                     }
                                     required
@@ -154,7 +157,7 @@ function TambahGuru() {
                                     </option>
                                     {mapel.map((mapelItem) => (
                                         <option key={mapelItem.id} value={mapelItem.id}>
-                                        {mapelItem.namaMapel}
+                                        {mapelItem.nama_mapel}
                                         </option>
                                     ))}
                                 </select>
@@ -172,7 +175,7 @@ function TambahGuru() {
                                 name="shippingOption"
                                 value="Laki-Laki"
                                 id="Laki"
-                                onChange={(e) => setJenisKelamin(e.target.value)}
+                                onChange={(e) => setJenis_kelamin(e.target.value)}
                                 />
 
                                 <label
@@ -203,7 +206,7 @@ function TambahGuru() {
                                 name="shippingOption"
                                 value="Perempuan"
                                 id="Perempuan"
-                                onChange={(e) => setJenisKelamin(e.target.value)}
+                                onChange={(e) => setJenis_kelamin(e.target.value)}
                                 />
 
                                 <label

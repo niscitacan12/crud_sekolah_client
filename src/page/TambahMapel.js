@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "../component/Sidebar";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FaArrowLeft, FaSave } from "react-icons/fa";
 
 function TambahMapel() {
-    const [namaMapel, setNamaMapel] = useState("");
-    const [tahunAjaran, setTahunAjaran] = useState("");
-    const [tingkatKelas, setTingkatKelas] = useState("");
+    const [nama_mapel, setNama_mapel] = useState("");
+    const [tahun_ajaran, setTahun_ajaran] = useState("");
+    const [tingkat_kelas, setTingkat_kelas] = useState("");
     const [deskripsi, setDeskripsi] = useState("");
 
     const addMapel = async (e) => {
         e.preventDefault();
     
         const newMapel = {
-            namaMapel,
-            tahunAjaran,
-            tingkatKelas,
+            nama_mapel,
+            tahun_ajaran,
+            tingkat_kelas,
             deskripsi,
         };
     
@@ -26,7 +26,7 @@ function TambahMapel() {
         try {
           // Menambahkan header Authorization dengan token ke dalam permintaan
           const response = await axios.post(
-            "http://localhost:7000/api/data_mapel",
+            `http://localhost:7000/api/data_mapel/add`,
             newMapel,
             {
               headers: {
@@ -61,18 +61,14 @@ function TambahMapel() {
     const batal = () => {
     window.location.href = "/tabelMapel";
     };
-    
-    //   useEffect(() => {
-    //     getAllMapel();
-    //   }, []);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-300 dark:bg-gray-300">
         <div className="w-1/5">
             <Sidebar />
         </div>
         <div className="flex-1 max-h-screen overflow-y-auto container p-8">
-            <div class="content-page max-h-screen container p-8 min-h-screen">
+            <div className="content-page max-h-screen container p-8 min-h-screen">
                 <div className="add-mapel mt-12 bg-white p-5 rounded-xl shadow-lg">
                     <p className="text-lg sm:text-xl font-medium mb-4 sm:mb-7">
                         Tambah Mapel
@@ -84,10 +80,11 @@ function TambahMapel() {
                                     Nama Mapel
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={namaMapel}
-                                    onChange={(e) => setNamaMapel(e.target.value)}
+                                    value={nama_mapel}
+                                    onChange={(e) => setNama_mapel(e.target.value)}
                                     required
                                 />
                             </div>
@@ -96,10 +93,11 @@ function TambahMapel() {
                                     Tahun Ajaran
                                 </label>
                                 <input
-                                    type="email"
+                                    autoComplete="off"
+                                    type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={tahunAjaran}
-                                    onChange={(e) => setTahunAjaran(e.target.value)}
+                                    value={tahun_ajaran}
+                                    onChange={(e) => setTahun_ajaran(e.target.value)}
                                     required
                                 />
                             </div>
@@ -108,10 +106,11 @@ function TambahMapel() {
                                     Tingkat Kelas
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    value={tingkatKelas}
-                                    onChange={(e) => setTingkatKelas(e.target.value)}
+                                    value={tingkat_kelas}
+                                    onChange={(e) => setTingkat_kelas(e.target.value)}
                                     required
                                 />
                             </div>
@@ -120,6 +119,7 @@ function TambahMapel() {
                                     Deskripsi
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     value={deskripsi}
